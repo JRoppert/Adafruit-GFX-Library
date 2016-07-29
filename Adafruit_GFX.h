@@ -1,11 +1,17 @@
 #ifndef _ADAFRUIT_GFX_H
 #define _ADAFRUIT_GFX_H
 
-#if ARDUINO >= 100
- #include "Arduino.h"
- #include "Print.h"
+#define SPARK_PLATFORM
+
+#if defined(SPARK_PLATFORM)
+ #include "application.h"
 #else
- #include "WProgram.h"
+ #if ARDUINO >= 100
+  #include "Arduino.h"
+  #include "Print.h"
+ #else
+  #include "WProgram.h"
+ #endif
 #endif
 
 #include "gfxfont.h"
@@ -71,7 +77,7 @@ class Adafruit_GFX : public Print {
     getTextBounds(const __FlashStringHelper *s, int16_t x, int16_t y,
       int16_t *x1, int16_t *y1, uint16_t *w, uint16_t *h);
 
-#if ARDUINO >= 100
+#if (ARDUINO >= 100) || defined(SPARK_PLATFORM)
   virtual size_t write(uint8_t);
 #else
   virtual void   write(uint8_t);
